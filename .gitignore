@@ -1,3 +1,5 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -8,7 +10,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-env/
 build/
 develop-eggs/
 dist/
@@ -20,9 +21,11 @@ lib64/
 parts/
 sdist/
 var/
+wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -42,7 +45,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-*,cover
+*.cover
 .hypothesis/
 
 # Translations
@@ -53,8 +56,9 @@ coverage.xml
 *.log
 local_settings.py
 
-# Flask instance folder
+# Flask stuff:
 instance/
+.webassets-cache
 
 # Scrapy stuff:
 .scrapy
@@ -65,7 +69,7 @@ docs/_build/
 # PyBuilder
 target/
 
-# IPython Notebook
+# Jupyter Notebook
 .ipynb_checkpoints
 
 # pyenv
@@ -74,69 +78,78 @@ target/
 # celery beat schedule file
 celerybeat-schedule
 
-# dotenv
-.env
+# SageMath parsed files
+*.sage.py
 
-# virtualenv
+# Environments
+.env
+.venv
+env/
 venv/
 ENV/
+env.bak/
+venv.bak/
 
 # Spyder project settings
 .spyderproject
+.spyproject
 
 # Rope project settings
 .ropeproject
 
-# =========================
-# Operating System Files
-# =========================
+# mkdocs documentation
+/site
 
-# OSX
-# =========================
+# mypy
+.mypy_cache/
+### JetBrains template
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
-.DS_Store
-.AppleDouble
-.LSOverride
+# User-specific stuff:
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
 
-# Thumbnails
-._*
+# Sensitive or high-churn files:
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.xml
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
 
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
+# Gradle:
+.idea/**/gradle.xml
+.idea/**/libraries
 
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# CMake
+cmake-build-debug/
 
-# Windows
-# =========================
+# Mongo Explorer plugin:
+.idea/**/mongoSettings.xml
 
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+## File-based project format:
+*.iws
 
-# Folder config file
-Desktop.ini
+## Plugin-specific files:
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# IntelliJ
+out/
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# mpeltonen/sbt-idea plugin
+.idea_modules/
 
-# Windows shortcuts
-*.lnk
+# JIRA plugin
+atlassian-ide-plugin.xml
 
-# Databases
-*.db
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
