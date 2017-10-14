@@ -23,7 +23,10 @@
 
 from src.objects.user import c
 
-c.exceute(
+c.execute(
     "CREATE TABLE IF NOT EXISTS users(id INTEGER, username TEXT, password TEXT, password_hash TEXT, PRIMARY KEY(id));"
 )
-c.close()
+
+if __name__ == '__main__':
+    from src import main
+    main.bot.run()

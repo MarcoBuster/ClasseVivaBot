@@ -57,6 +57,16 @@ class User:
         self.id = user.id
         self.rhash = 'user:' + str(user.id)
 
+        result = self.get_credentials()
+        if not result:
+            self.logged_in = False
+            self.username = None
+            self.password = None
+        else:
+            self.logged_in = True
+            self.username = result['username']
+            self.password = result['password']
+
         # Redis database
         if r.hget(self.rhash, 'id') != user.id:
             r.hset(self.rhash, 'id', user.id)
@@ -74,7 +84,10 @@ class User:
         :return: state
         """
         if not new_state:
-            return r.hget(self.rhash, 'state')
+            state = r.hget(self.rhash, 'state')
+            if state:
+                return state.decode('utf-8')
+            return state
 
         r.hset(self.rhash, 'state', new_state)
         return True
@@ -84,10 +97,13 @@ class User:
         Set the user ClasseViva credentials
         :param username: ClasseViva username or email
         :param password: ClasseViva password
-        :return:
         """
-        c.execute('INSERT INTO users VALUES(?, ?, ?, ?)', (self.id, username, password, 'todo'))
+        c.execute('INSERT INTO users VALUES(%s, %s, %s, %s)', (self.id, username, password, 'todo'))
         conn.commit()
+
+        self.logged_in = True
+        self.username = username
+        self.password = password
 
     def get_credentials(self):
         """
@@ -96,4 +112,22 @@ class User:
         """
         c.execute('SELECT username, password FROM users WHERE id=%s', (self.id,))
         row = c.fetchone()
-        return row[0], row[1]
+        if not row:
+            return False
+
+        return {'username': row[0], 'password': row[1]}
+
+    def set_redis(self, key, value):
+        """
+        Set a personal redis key
+        :param key: key
+        :param value: value
+        """
+        r.hset(self.rhash, key, value)
+
+    def get_redis(self, key):
+        """
+        Get a redis key
+        :param key: key
+        """
+        return r.hget(self.rhash, key)

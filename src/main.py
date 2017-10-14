@@ -20,3 +20,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+
+import botogram
+
+from .updates import commands, messages
+import config
+
+
+bot = botogram.create(config.BOT_TOKEN)
+
+
+@bot.command("start")
+def start(message):
+    commands.process_start_command(message)
+
+
+@bot.process_message
+def process_message(message):
+    messages.process_message(message)
