@@ -153,3 +153,5 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# Configuration file
+config.py
