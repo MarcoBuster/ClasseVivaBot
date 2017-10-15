@@ -39,14 +39,13 @@ def process_message(message):
 
         keyboard = botogram.Buttons()
         keyboard[0].callback("⏮ Riprova", "login")
-
         text = (
             "🔐 <b>Login nell'account Classe Viva</b>"
             "\nOra inserisci la password del tuo account Classe Viva / Spaggiari"
             "\n\n💡 <b>Suggerimento</b>: "
             "<i>Per preservare la tua privacy, elimina il messaggio contenente la password dopo averlo inviato!</i>"
         )
-        message.reply(text, syntax="HTML", preview=False)
+        message.reply(text, syntax="HTML", preview=False, attach=keyboard)
         u.state('login_2')
         return
 
@@ -78,10 +77,22 @@ def process_message(message):
             message.reply(text, syntax="HTML", preview=False, attach=keyboard)
             return
 
-        message.reply(
+        text = (
             "✅ <b>Login completato con successo</b>"
-            # TODO: Add main menu
+            "\n\n<i>Cosa vuoi fare? Clicca un pulsante sotto:</i>"
         )
+        keyboard = botogram.Buttons()
+        keyboard[0].callback('📆 Cosa si è fatto oggi a scuola?', 'test')
+        keyboard[1].callback('📕 Voti', 'grades')
+        keyboard[1].callback('✍️ Note', 'notes')
+        keyboard[1].callback('🗓 Agenda', 'agenda')
+        keyboard[2].callback('🏃 Assenze', 'absences')
+        keyboard[2].callback('🙋‍♂️ Lezioni', 'lessons')
+        keyboard[2].callback('🗂‍ Files', 'files')
+        keyboard[3].callback('⚙️ Impostazioni', 'settings')
+        keyboard[3].callback('ℹ️ Informazioni', 'infos')
+        message.reply(text, syntax="HTML", preview=False, attach=keyboard)
+
         u.set_credentials(username, password)
         u.set_redis('first_name', result['first_name'])
         u.set_redis('last_name', result['last_name'])

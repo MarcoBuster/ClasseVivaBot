@@ -20,26 +20,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
 import botogram
 
-from .updates import commands, messages, callback
-import config
+from ..objects.user import User
 
 
-bot = botogram.create(config.BOT_TOKEN)
+def process_login_callback(query, message):
+    u = User(query.sender)
+    u.state('login_1')
 
-
-@bot.command("start")
-def start(message):
-    commands.process_start_command(message)
-
-
-@bot.process_message
-def process_message(message):
-    messages.process_message(message)
-
-
-@bot.callback("login")
-def login_callback(query, message):
-    callback.process_login_callback(query, message)
+    keyboard = botogram.Buttons()
+    keyboard[0].callback("⏮ Riprova", "login")
+    text = (
+        "🔐 <b>Login nell'account di ClasseViva</b>"
+        "\nInserisci l'username o la mail di ClasseViva / Spaggiari"
+        "\n\n⚠️ <i>Questo bot è accessibile dai soli studenti, "
+        "i dati di login di un docente potrebbero non funzionare</i>"
+    )
+    message.edit(text, syntax="HTML", preview=False)
