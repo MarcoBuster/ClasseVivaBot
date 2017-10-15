@@ -56,7 +56,7 @@ def process_message(message):
 
         s = classeviva.Session()
         try:
-            s.login(username, password)
+            result = s.login(username, password)
         except AuthenticationFailedError:
             keyboard = botogram.Buttons()
             keyboard[0].callback("⏮ Riprova", "login")
@@ -83,3 +83,5 @@ def process_message(message):
             # TODO: Add main menu
         )
         u.set_credentials(username, password)
+        u.set_redis('first_name', result['first_name'])
+        u.set_redis('last_name', result['last_name'])

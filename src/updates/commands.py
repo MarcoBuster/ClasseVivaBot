@@ -21,6 +21,8 @@
 # SOFTWARE.
 
 
+import botogram
+
 from ..objects.user import User
 
 
@@ -39,7 +41,8 @@ def process_start_command(message):
             "\n<b>📆 Cosa si è fatto oggi a scuola?</b> O ieri, o l'altro giorno! Visualizza le lezioni, "
             "gli argomenti svolti e i professori avuti"
             "\n<b>🏃 Assenze e ritardi</b>, monitorali e consulta le statistiche"
-            "\n<i>Dagli studenti, per gli studenti: adatta alle nostre esigenze!</i>"
+            "\n<i>... e molto, molto altro!</i>"
+            "\n\n❇️ Dagli <b>studenti</b>, per gli <b>studenti</b>: <i>adatta alle nostre esigenze!</i>"
         )
         message.reply(text, syntax="HTML", preview=False)
         text = (
@@ -50,3 +53,23 @@ def process_start_command(message):
         )
         message.chat.send(text, syntax="HTML", preview=False)
         u.state('login_1')
+        return
+
+    name = u.get_redis('first_name').decode('utf-8') + ' ' + u.get_redis('last_name').decode('utf-8')
+    text = (
+        "📚 <b>Benvenuto in ClasseVivaBot!</b>"
+        "\n✅ Sei loggato correttamente come <b>{name}</b>"
+        "\n\n<i>Cosa vuoi fare? Clicca un pulsante sotto:</i>"
+        .format(name=name)
+    )
+    keyboard = botogram.Buttons()
+    keyboard[0].callback('📆 Cosa si è fatto oggi a scuola?', 'test')
+    keyboard[1].callback('📕 Voti', 'grades')
+    keyboard[1].callback('✍️ Note', 'notes')
+    keyboard[1].callback('🗓 Agenda', 'agenda')
+    keyboard[2].callback('🏃 Assenze', 'absences')
+    keyboard[2].callback('🙋‍♂️ Lezioni', 'lessons')
+    keyboard[2].callback('🗂‍ Files', 'files')
+    keyboard[3].callback('⚙️ Impostazioni', 'settings')
+    keyboard[3].callback('ℹ️ Informazioni', 'infos')
+    message.reply(text, syntax="HTML", preview=False, attach=keyboard)
