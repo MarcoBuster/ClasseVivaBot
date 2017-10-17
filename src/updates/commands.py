@@ -23,6 +23,8 @@
 
 import botogram
 
+from datetime import date as dt
+
 from ..objects.user import User
 
 
@@ -63,13 +65,13 @@ def process_start_command(message):
         .format(name=name)
     )
     keyboard = botogram.Buttons()
-    keyboard[0].callback('📆 Cosa si è fatto oggi a scuola?', 'test')
+    keyboard[0].callback('📆 Cosa si è fatto oggi a scuola?', 'lessons_by_day', dt.today().isoformat())
     keyboard[1].callback('📕 Voti', 'grades')
     keyboard[1].callback('✍️ Note', 'notes')
     keyboard[1].callback('🗓 Agenda', 'agenda')
     keyboard[2].callback('🏃 Assenze', 'absences')
-    keyboard[2].callback('🙋‍♂️ Lezioni', 'lessons')
+    keyboard[2].callback('🙋‍♂️ Lezioni', 'lessons_by_subject')
     keyboard[2].callback('🗂‍ Files', 'files')
     keyboard[3].callback('⚙️ Impostazioni', 'settings')
     keyboard[3].callback('ℹ️ Informazioni', 'infos')
-    message.reply(text, syntax="HTML", preview=False, attach=keyboard)
+    message.chat.send(text, syntax="HTML", preview=False, attach=keyboard)

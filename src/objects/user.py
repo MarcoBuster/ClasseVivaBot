@@ -23,6 +23,8 @@
 
 from datetime import datetime as dt
 
+import classeviva
+
 import redis
 import psycopg2
 
@@ -92,6 +94,21 @@ class User:
         r.hset(self.rhash, 'state', new_state)
         return True
 
+    def set_redis(self, key, value):
+        """
+        Set a personal redis key
+        :param key: key
+        :param value: value
+        """
+        r.hset(self.rhash, key, value)
+
+    def get_redis(self, key):
+        """
+        Get a redis key
+        :param key: key
+        """
+        return r.hget(self.rhash, key)
+
     def set_credentials(self, username, password):
         """
         Set the user ClasseViva credentials
@@ -118,17 +135,16 @@ class User:
 
         return {'username': row[0], 'password': row[1]}
 
-    def set_redis(self, key, value):
+    def login(self):
         """
-        Set a personal redis key
-        :param key: key
-        :param value: value
+        Return the personal ClasseViva Session object
+        :return: classeviva.Session object
         """
-        r.hset(self.rhash, key, value)
+        self.session = classeviva.Session()
 
-    def get_redis(self, key):
-        """
-        Get a redis key
-        :param key: key
-        """
-        return r.hget(self.rhash, key)
+        credentials = self.get_credentials()
+        if not credentials:
+            return False
+
+        self.session.login(self.username, self.password)
+        return self.session

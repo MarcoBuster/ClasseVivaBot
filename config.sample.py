@@ -22,6 +22,8 @@
 
 # Rename this file to config.py
 
+from datetime import datetime as dt
+
 # -- Redis configuration --
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
@@ -37,3 +39,7 @@ POSTGRESQL_PASSWORD = ''
 
 # -- Telegram configuration --
 BOT_TOKEN = ''
+
+# -- ClasseViva configuration --
+SCHOOL_YEAR_BEGINNING = dt(year=2017, month=9, day=1)
+SCHOOL_YEAR_END = dt(year=2018, month=6, day=30)

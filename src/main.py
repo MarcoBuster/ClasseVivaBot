@@ -40,6 +40,16 @@ def process_message(message):
     messages.process_message(message)
 
 
+@bot.callback("home")
+def process_home_callback(query, message):
+    callback.process_home_callback(query, message)
+
+
 @bot.callback("login")
 def login_callback(query, message):
     callback.process_login_callback(query, message)
+
+
+@bot.callback("lessons_by_day")
+def lessons_by_day_callback(query, data, message):
+    callback.process_lessons_by_day_callback(query, data, message)

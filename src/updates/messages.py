@@ -22,6 +22,7 @@
 
 
 from ..objects.user import User
+from datetime import date as dt
 
 from classeviva.errors import AuthenticationFailedError
 import classeviva
@@ -82,17 +83,18 @@ def process_message(message):
             "\n\n<i>Cosa vuoi fare? Clicca un pulsante sotto:</i>"
         )
         keyboard = botogram.Buttons()
-        keyboard[0].callback('📆 Cosa si è fatto oggi a scuola?', 'test')
+        keyboard[0].callback('📆 Cosa si è fatto oggi a scuola?', 'lessons_by_day', dt.today().isoformat())
         keyboard[1].callback('📕 Voti', 'grades')
         keyboard[1].callback('✍️ Note', 'notes')
         keyboard[1].callback('🗓 Agenda', 'agenda')
         keyboard[2].callback('🏃 Assenze', 'absences')
-        keyboard[2].callback('🙋‍♂️ Lezioni', 'lessons')
+        keyboard[2].callback('🙋‍♂️ Lezioni', 'lessons_by_subject')
         keyboard[2].callback('🗂‍ Files', 'files')
         keyboard[3].callback('⚙️ Impostazioni', 'settings')
         keyboard[3].callback('ℹ️ Informazioni', 'infos')
-        message.reply(text, syntax="HTML", preview=False, attach=keyboard)
+        message.chat.send(text, syntax="HTML", preview=False, attach=keyboard)
 
+        u.state('home')
         u.set_credentials(username, password)
         u.set_redis('first_name', result['first_name'])
         u.set_redis('last_name', result['last_name'])
