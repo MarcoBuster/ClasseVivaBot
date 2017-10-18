@@ -50,6 +50,11 @@ def login_callback(query, message):
     callback.process_login_callback(query, message)
 
 
+@bot.callback("infos")
+def infos_callback(message):
+    callback.process_infos_callback(message)
+
+
 @bot.callback("lessons_by_day")
 def lessons_by_day_callback(query, data, message):
     callback.process_lessons_by_day_callback(query, data, message)

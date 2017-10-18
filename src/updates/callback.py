@@ -72,6 +72,20 @@ def process_login_callback(query, message):
     message.edit(text, syntax="HTML", preview=False)
 
 
+def process_infos_callback(message):
+    keyboard = botogram.Buttons()
+    keyboard[0].callback("🔙 Torna indietro", "home")
+    text = (
+        "ℹ️ <b>Informazioni sul bot</b>"
+        "\n👤 <b>Sviluppatore</b>: <a href=\"t.me/MarcoBuster\">Marco Aceti</a>, "
+        "(guarda i miei <a href=\"t.me/imieiprogetti\">altri progetti</a>)"
+        "\n👥 <b>Gruppo di supporto</b>: <a href=\"t.me/MarcoBuster\">entra e chiedi</a>"
+        "\n💻 <b>Codice sorgente</b>: <a href=\"https://github.com/MarcoBuster/ClasseVivaBot\">GitHub</a>"
+        "\n#️⃣ <b>Versione</b>: <code>4.0 DEV</code>"
+    )
+    message.edit(text, syntax="HTML", preview=False, attach=keyboard)
+
+
 def process_lessons_by_day_callback(query, data, message):
     u = User(query.sender)
     if not u.logged_in:
