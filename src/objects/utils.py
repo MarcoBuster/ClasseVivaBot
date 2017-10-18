@@ -23,6 +23,8 @@
 
 from dateutil import parser
 
+import config
+
 
 WEEKDAYS = {
     1: "Lunedì",
@@ -60,6 +62,22 @@ EMOJII_NUMBERS = {
     9: "9️⃣",
     10: "🔟",
 }
+EMOJII_SIMBOLS = {
+    "0": "0️⃣",
+    "1": "1️⃣",
+    "2": "2️⃣",
+    "3": "3️⃣",
+    "4": "4️⃣",
+    "5": "5️⃣",
+    "6": "6️⃣",
+    "7": "7️⃣",
+    "8": "8️⃣",
+    "9": "9️⃣",
+    "10": "🔟",
+    "+": "+",
+    "-": "-",
+    "½": ",5"
+}
 
 
 class Utils:
@@ -83,6 +101,13 @@ class Utils:
         return EMOJII_NUMBERS[lesson['evtHPos']]
 
     @staticmethod
+    def format_grade_to_emoji(grade):
+        emojii = ""
+        for char in grade:
+            emojii += EMOJII_SIMBOLS[char]
+        return emojii
+
+    @staticmethod
     def format_teachers_list(teachers):
         index = 0
         result = ''
@@ -100,3 +125,10 @@ class Utils:
     @staticmethod
     def from_iso_format(iso):
         return parser.parse(iso)
+
+    @staticmethod
+    def format_schoolyear():
+        return "{begin}-{end}".format(
+            begin=config.SCHOOL_YEAR_BEGINNING.year,
+            end=config.SCHOOL_YEAR_END.year
+        )

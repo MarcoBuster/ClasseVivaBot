@@ -55,6 +55,11 @@ def lessons_by_day_callback(query, data, message):
     callback.process_lessons_by_day_callback(query, data, message)
 
 
+@bot.callback("grades")
+def grades(query, data, message):
+    callback.process_grades_callback(query, data, message)
+
+
 @bot.callback("null")
 def null_callback(query):
     query.notify("¯\_(ツ)_/¯", alert=False)
