@@ -23,49 +23,19 @@
 
 import botogram
 
-from .updates import commands, messages
-from .updates import callback
-import config
+from ...objects.user import User
 
 
-bot = botogram.create(config.BOT_TOKEN)
+def process(query, message):
+    u = User(query.sender)
+    u.state('login_1')
 
-
-@bot.command("start")
-def start(message):
-    commands.process_start_command(message)
-
-
-@bot.process_message
-def process_message(message):
-    messages.process_message(message)
-
-
-@bot.callback("home")
-def process_home_callback(query, message):
-    callback.home.process(query, message)
-
-
-@bot.callback("login")
-def login_callback(query, message):
-    callback.login.process(query, message)
-
-
-@bot.callback("infos")
-def infos_callback(message):
-    callback.infos.process(message)
-
-
-@bot.callback("lessons_by_day")
-def lessons_by_day_callback(query, data, message):
-    callback.lessons_by_day.process(query, data, message)
-
-
-@bot.callback("grades")
-def grades(query, data, message):
-    callback.grades.process(query, data, message)
-
-
-@bot.callback("null")
-def null_callback(query):
-    query.notify("¯\_(ツ)_/¯", alert=False)
+    keyboard = botogram.Buttons()
+    keyboard[0].callback("⏮ Riprova", "login")
+    text = (
+        "🔐 <b>Login nell'account di ClasseViva</b>"
+        "\nInserisci l'username o la mail di ClasseViva / Spaggiari"
+        "\n\n⚠️ <i>Questo bot è accessibile dai soli studenti, "
+        "i dati di login di un docente potrebbero non funzionare</i>"
+    )
+    message.edit(text, syntax="HTML", preview=False)

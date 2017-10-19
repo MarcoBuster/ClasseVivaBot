@@ -22,50 +22,29 @@
 
 
 import botogram
+from datetime import datetime as dt
 
-from .updates import commands, messages
-from .updates import callback
-import config
-
-
-bot = botogram.create(config.BOT_TOKEN)
+from ...objects.user import User
 
 
-@bot.command("start")
-def start(message):
-    commands.process_start_command(message)
+def process(query, message):
+    u = User(query.sender)
+    u.state('home')
 
-
-@bot.process_message
-def process_message(message):
-    messages.process_message(message)
-
-
-@bot.callback("home")
-def process_home_callback(query, message):
-    callback.home.process(query, message)
-
-
-@bot.callback("login")
-def login_callback(query, message):
-    callback.login.process(query, message)
-
-
-@bot.callback("infos")
-def infos_callback(message):
-    callback.infos.process(message)
-
-
-@bot.callback("lessons_by_day")
-def lessons_by_day_callback(query, data, message):
-    callback.lessons_by_day.process(query, data, message)
-
-
-@bot.callback("grades")
-def grades(query, data, message):
-    callback.grades.process(query, data, message)
-
-
-@bot.callback("null")
-def null_callback(query):
-    query.notify("¯\_(ツ)_/¯", alert=False)
+    name = u.get_redis('first_name').decode('utf-8') + ' ' + u.get_redis('last_name').decode('utf-8')
+    text = (
+        "📚 <b>Benvenuto in ClasseVivaBot!</b>"
+        "\n✅ Sei loggato correttamente come <b>{name}</b>"
+        "\n\n<i>Cosa vuoi fare? Clicca un pulsante sotto:</i>".format(name=name)
+    )
+    keyboard = botogram.Buttons()
+    keyboard[0].callback('📆 Cosa si è fatto oggi a scuola?', 'lessons_by_day', dt.today().isoformat())
+    keyboard[1].callback('📕 Voti', 'grades')
+    keyboard[1].callback('✍️ Note', 'notes')
+    keyboard[1].callback('🗓 Agenda', 'agenda')
+    keyboard[2].callback('🏃 Assenze', 'absences')
+    keyboard[2].callback('🙋‍♂️ Lezioni', 'lessons_by_subject')
+    keyboard[2].callback('🗂‍ Files', 'files')
+    keyboard[3].callback('⚙️ Impostazioni', 'settings')
+    keyboard[3].callback('ℹ️ Informazioni', 'infos')
+    message.edit(text, syntax="HTML", preview=False, attach=keyboard)

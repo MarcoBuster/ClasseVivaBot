@@ -23,49 +23,16 @@
 
 import botogram
 
-from .updates import commands, messages
-from .updates import callback
-import config
 
-
-bot = botogram.create(config.BOT_TOKEN)
-
-
-@bot.command("start")
-def start(message):
-    commands.process_start_command(message)
-
-
-@bot.process_message
-def process_message(message):
-    messages.process_message(message)
-
-
-@bot.callback("home")
-def process_home_callback(query, message):
-    callback.home.process(query, message)
-
-
-@bot.callback("login")
-def login_callback(query, message):
-    callback.login.process(query, message)
-
-
-@bot.callback("infos")
-def infos_callback(message):
-    callback.infos.process(message)
-
-
-@bot.callback("lessons_by_day")
-def lessons_by_day_callback(query, data, message):
-    callback.lessons_by_day.process(query, data, message)
-
-
-@bot.callback("grades")
-def grades(query, data, message):
-    callback.grades.process(query, data, message)
-
-
-@bot.callback("null")
-def null_callback(query):
-    query.notify("¯\_(ツ)_/¯", alert=False)
+def process(message):
+    keyboard = botogram.Buttons()
+    keyboard[0].callback("🔙 Torna indietro", "home")
+    text = (
+        "ℹ️ <b>Informazioni sul bot</b>"
+        "\n👤 <b>Sviluppatore</b>: <a href=\"t.me/MarcoBuster\">Marco Aceti</a>, "
+        "(guarda i miei <a href=\"t.me/imieiprogetti\">altri progetti</a>)"
+        "\n👥 <b>Gruppo di supporto</b>: <a href=\"t.me/MarcoBuster\">entra e chiedi</a>"
+        "\n💻 <b>Codice sorgente</b>: <a href=\"https://github.com/MarcoBuster/ClasseVivaBot\">GitHub</a>"
+        "\n#️⃣ <b>Versione</b>: <code>4.0 DEV</code>"
+    )
+    message.edit(text, syntax="HTML", preview=False, attach=keyboard)
