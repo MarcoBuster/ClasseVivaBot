@@ -24,7 +24,7 @@
 from src.objects.user import c
 
 c.execute(
-    "CREATE TABLE IF NOT EXISTS users(id INTEGER, username TEXT, password TEXT, password_hash TEXT, PRIMARY KEY(id));"
+    "CREATE TABLE IF NOT EXISTS users(id INTEGER, username TEXT, password TEXT, PRIMARY KEY(id));"
 )
 
 if __name__ == '__main__':

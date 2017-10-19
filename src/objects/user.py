@@ -115,8 +115,8 @@ class User:
         :param username: ClasseViva username or email
         :param password: ClasseViva password
         """
-        c.execute('INSERT INTO users VALUES(%s, %s, %s, %s) ON CONFLICT DO NOTHING',  # ¯\_(ツ)_/¯
-                  (self.id, username, password, 'todo'))
+        c.execute('INSERT INTO users VALUES(%s, %s, %s) ON CONFLICT DO NOTHING',  # ¯\_(ツ)_/¯
+                  (self.id, username, password))
         conn.commit()
 
         self.logged_in = True
