@@ -66,6 +66,11 @@ def grades(query, data, message):
     callback.grades.process(query, data, message)
 
 
+@bot.callback("absences")
+def absences(query, data, message):
+    callback.absences.process(query, message)
+
+
 @bot.callback("null")
 def null_callback(query):
     query.notify("¯\_(ツ)_/¯", alert=False)
