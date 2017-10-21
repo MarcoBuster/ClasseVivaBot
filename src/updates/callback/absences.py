@@ -106,8 +106,8 @@ def process(query, message):
             )
 
     text += (
-        "\n<b>‼️ {not_justified} da giustificare</b>".format(not_justified=not_justified) if not_justified != 0 else ""
-        + absences + delays + anticipated_relases
+        "\n<b>‼️ {not_justified} da giustificare</b>".format(not_justified=not_justified)
+        if not_justified != 0 else "" + absences + delays + anticipated_relases
     )
     keyboard = botogram.Buttons()
     keyboard[0].callback("🔙 Torna indietro", "home")
