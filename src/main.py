@@ -67,7 +67,7 @@ def grades(query, data, message):
 
 
 @bot.callback("absences")
-def absences(query, data, message):
+def absences(query, message):
     callback.absences.process(query, message)
 
 
