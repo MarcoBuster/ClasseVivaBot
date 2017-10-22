@@ -51,13 +51,13 @@ def process(query, data, message):
 
     if not data:
         # Reorganize grades under subjects
-        subjects = []
+        subjects = {}
         _subjects = []
         for grade in result['grades']:
             if grade['subjectId'] in _subjects:
                 subjects[grade['subjectDesc']].append(grade)
             else:
-                subjects.append({grade['subjectDesc']: [grade]})
+                subjects = {**subjects, grade['subjectDesc']: [grade]}
 
             _subjects.append(grade['subjectId'])
 
@@ -68,58 +68,57 @@ def process(query, data, message):
         )
         keyboard = botogram.Buttons()
         index = 0
-        for _subject in subjects:
-            for subject in _subject:
-                summation = 0
-                count = 0
-                highest = 0
-                lowest = 10000
-                for grade in _subject[subject]:
-                    if grade.get('decimalValue') and grade['displayValue'] not in ["+", "-"]:
-                        summation += (grade['decimalValue'] * grade['weightFactor'])
-                        count += 1
+        for subject in subjects:
+            summation = 0
+            count = 0
+            highest = 0
+            lowest = 10000
+            for grade in subjects[subject]:
+                if grade.get('decimalValue') and grade['displayValue'] not in ["+", "-"]:
+                    summation += (grade['decimalValue'] * grade['weightFactor'])
+                    count += 1
 
-                        if grade['decimalValue'] > highest:
-                            highest = grade['displayValue']
+                    if grade['decimalValue'] > highest:
+                        highest = grade['decimalValue']
 
-                        if grade['decimalValue'] < lowest:
-                            lowest = grade['displayValue']
+                    if grade['decimalValue'] < lowest:
+                        lowest = grade['decimalValue']
 
-                if count != 0:
-                    average = summation / count
+            if count != 0:
+                average = summation / count
 
-                    if average >= 8:
-                        outcome = 'largamente positivo'
-                    elif 6 <= average < 8:
-                        outcome = 'positivo'
-                    elif 5 <= average < 6:
-                        outcome = 'negativo'
-                    else:
-                        outcome = 'gravemente negativo'
-
+                if average >= 8:
+                    outcome = 'largamente positivo'
+                elif 6 <= average < 8:
+                    outcome = 'positivo'
+                elif 5 <= average < 6:
+                    outcome = 'negativo'
                 else:
-                    average = 'non disponibile'
-                    outcome = 'non disponibile'
-                    highest = 'non disponibile'
-                    lowest = 'non disponibile'
+                    outcome = 'gravemente negativo'
 
-                text += (
-                    "\n\n➖ <b>{subject}</b>"
-                    "\n<b>Voti</b> (facenti media): {count}"
-                    "\n<b>Voto più alto</b>: {highest}"
-                    "\n<b>Voto più basso</b>: {lowest}"
-                    "\n<b>Media</b>: {average} {outcome}"
-                    .format(
-                        subject=subject.capitalize(),
-                        count=count,
-                        highest=highest,
-                        lowest=lowest,
-                        average=round(average, 2), outcome="- <i>" + format(outcome) + "</i>"
-                    )
+            else:
+                average = 'non disponibile'
+                outcome = 'non disponibile'
+                highest = 'non disponibile'
+                lowest = 'non disponibile'
+
+            text += (
+                "\n\n➖ <b>{subject}</b>"
+                "\n<b>Voti</b> (facenti media): {count}"
+                "\n<b>Voto più alto</b>: {highest}"
+                "\n<b>Voto più basso</b>: {lowest}"
+                "\n<b>Media</b>: {average} {outcome}"
+                .format(
+                    subject=subject.capitalize(),
+                    count=count,
+                    highest=highest,
+                    lowest=lowest,
+                    average=round(average, 2), outcome="- <i>" + format(outcome) + "</i>"
                 )
-                keyboard[index].callback("🔹 {subject}".format(subject=subject.capitalize()),
-                                         "grades", format(_subject[subject][0]['subjectId']))
-                index += 1
+            )
+            keyboard[index].callback("🔹 {subject}".format(subject=subject.capitalize()),
+                                     "grades", format(subjects[subject][0]['subjectId']))
+            index += 1
 
         keyboard[index + 1].callback("🔙 Torna indietro", "home")
         message.edit(text, syntax="HTML", preview=False, attach=keyboard)
