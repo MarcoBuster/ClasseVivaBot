@@ -1,1 +1,1 @@
-from . import home, login, infos, lessons_by_day, grades, absences
+from . import home, login, infos, lessons_by_day, grades, agenda, absences

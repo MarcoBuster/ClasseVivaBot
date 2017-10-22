@@ -66,6 +66,11 @@ def grades(query, data, message):
     callback.grades.process(query, data, message)
 
 
+@bot.callback("agenda")
+def agenda(query, data, message):
+    callback.agenda.process(query, data, message)
+
+
 @bot.callback("absences")
 def absences(query, message):
     callback.absences.process(query, message)
