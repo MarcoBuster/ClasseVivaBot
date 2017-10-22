@@ -29,10 +29,12 @@ def process(message):
     keyboard[0].callback("🔙 Torna indietro", "home")
     text = (
         "ℹ️ <b>Informazioni sul bot</b>"
-        "\n👤 <b>Sviluppatore</b>: <a href=\"t.me/MarcoBuster\">Marco Aceti</a>, "
+        "\n👤 <b>Sviluppatore</b>: <a href=\"t.me/MarcoBuster\">@MarcoBuster</a> "
         "(guarda i miei <a href=\"t.me/imieiprogetti\">altri progetti</a>)"
         "\n👥 <b>Gruppo di supporto</b>: <a href=\"t.me/MarcoBuster\">entra e chiedi</a>"
-        "\n💻 <b>Codice sorgente</b>: <a href=\"https://github.com/MarcoBuster/ClasseVivaBot\">GitHub</a>"
+        "\n💻 <b>Codice sorgente</b>: <a href=\"https://github.com/MarcoBuster/ClasseVivaBot\">GitHub</a> (Python/MIT)"
+        "\n💎 <b>Dona</b> quanto vuoi per tenere il progetto online: "
+        "<a href=\"https://paypal.me/marcoaceti\">con PayPal</a>"
         "\n#️⃣ <b>Versione</b>: <code>4.0 DEV</code>"
     )
     message.edit(text, syntax="HTML", preview=False, attach=keyboard)
