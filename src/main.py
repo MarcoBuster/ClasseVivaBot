@@ -56,6 +56,11 @@ def infos_callback(message):
     callback.infos.process(message)
 
 
+@bot.callback("settings")
+def settings_callback(query, data, message):
+    callback.settings.process(query, data, message)
+
+
 @bot.callback("lessons_by_day")
 def lessons_by_day_callback(query, data, message):
     callback.lessons_by_day.process(query, data, message)

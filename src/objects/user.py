@@ -135,6 +135,16 @@ class User:
 
         return {'username': row[0], 'password': row[1]}
 
+    def delete_credentials(self):
+        """
+        Delete the user ClasseViva credentials
+        :return: True
+        """
+        c.execute('DELETE FROM users WHERE id=%s', (self.id,))
+        conn.commit()
+
+        return True
+
     def login(self):
         """
         Return the personal ClasseViva Session object
