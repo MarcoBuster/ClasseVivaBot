@@ -93,8 +93,9 @@ def process(query, data, message):
 
     keyboard = botogram.Buttons()
     yesterday = day - td(days=1)
-    keyboard[0].callback("⏪ {yesterday}".format(yesterday=utils.format_date(yesterday)), "lessons_by_day",
-                         yesterday.isoformat())
+    if not (yesterday < config.SCHOOL_YEAR_BEGINNING):
+        keyboard[0].callback("⏪ {yesterday}".format(yesterday=utils.format_date(yesterday)), "lessons_by_day",
+                             yesterday.isoformat())
     tomorrow = day + td(days=1)
     if not (tomorrow > dt.today()):
         keyboard[0].callback("⏩ {tomorrow}".format(tomorrow=utils.format_date(tomorrow)), "lessons_by_day",
