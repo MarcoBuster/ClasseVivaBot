@@ -113,7 +113,8 @@ def process(query, data, message):
                     count=count,
                     highest=highest,
                     lowest=lowest,
-                    average=round(average, 2), outcome="- <i>" + format(outcome) + "</i>"
+                    average=round(average, 2) if type(average) in [int, float] else average,
+                    outcome="- <i>" + format(outcome) + "</i>"
                 )
             )
             keyboard[index].callback("🔹 {subject}".format(subject=subject.capitalize()),
