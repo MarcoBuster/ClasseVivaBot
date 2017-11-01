@@ -21,4 +21,4 @@
 # SOFTWARE.
 
 
-from . import home, login, settings, infos, lessons_by_day, grades, agenda, absences
+from . import home, login, settings, infos, lessons_by_day, lessons_by_subject, grades, agenda, absences

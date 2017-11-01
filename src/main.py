@@ -66,6 +66,11 @@ def lessons_by_day_callback(query, data, message):
     callback.lessons_by_day.process(query, data, message)
 
 
+@bot.callback("lessons_by_subject")
+def lessons_by_subject_callback(query, data, message):
+    callback.lessons_by_subject.process(query, data, message)
+
+
 @bot.callback("grades")
 def grades(query, data, message):
     callback.grades.process(query, data, message)
