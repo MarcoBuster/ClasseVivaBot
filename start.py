@@ -29,4 +29,4 @@ c.execute(
 
 if __name__ == '__main__':
     from src import main
-    main.bot.run()
+    main.bot.run(workers=5)

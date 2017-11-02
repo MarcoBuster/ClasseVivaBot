@@ -29,6 +29,8 @@ import config
 
 
 bot = botogram.create(config.BOT_TOKEN)
+bot.process_backlog = True
+bot.lang = "it"
 
 
 @bot.command("start")
