@@ -26,15 +26,22 @@ import botogram
 
 def process(message):
     keyboard = botogram.Buttons()
-    keyboard[0].callback("🔙 Torna indietro", "home")
     text = (
         "ℹ️ <b>Informazioni sul bot</b>"
         "\n👤 <b>Sviluppatore</b>: <a href=\"t.me/MarcoBuster\">@MarcoBuster</a> "
         "(guarda i miei <a href=\"t.me/imieiprogetti\">altri progetti</a>)"
         "\n👥 <b>Gruppo di supporto</b>: <a href=\"t.me/MarcoBuster\">entra e chiedi</a>"
         "\n💻 <b>Codice sorgente</b>: <a href=\"https://github.com/MarcoBuster/ClasseVivaBot\">GitHub</a> (Python/MIT)"
+        "\n📃 <b>Informativa privacy</b>: "
+        "<a href=\"https://marcoaceti.it/classevivabot/informativa_privacy.html\">link</a>"
         "\n💎 <b>Dona</b> quanto vuoi per tenere il progetto online: "
         "<a href=\"https://paypal.me/marcoaceti\">con PayPal</a>"
-        "\n#️⃣ <b>Versione</b>: <code>4.0 DEV</code>"
+        "\n#️⃣ <b>Versione</b>: <code>4.0 BETA</code>"
     )
+    keyboard[1].url("👤 Scrivi allo sviluppatore", "https://t.me/MarcoBuster")
+    keyboard[1].url("👥 Gruppo di supporto", "https://t.me/MarcoBusterGroup")
+    keyboard[2].url("💻 Codice sorgente", "https://github.com/MarcoBuster/ClasseVivaBot")
+    keyboard[2].url("📃 Informativa privacy", "https://marcoaceti.it/classevivabot/informativa_privacy.html")
+    keyboard[2].url("💎 Dona", "https://paypal.me/marcoaceti")
+    keyboard[3].callback("🔙 Torna indietro", "home")
     message.edit(text, syntax="HTML", preview=False, attach=keyboard)

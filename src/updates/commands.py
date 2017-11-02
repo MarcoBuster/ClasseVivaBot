@@ -49,8 +49,14 @@ def process_start_command(message):
         message.reply(text, syntax="HTML", preview=False)
         text = (
             "🔐 <b>Per iniziare, esegui il login</b>"
-            "\nInserisci l'username o la mail di ClasseViva / Spaggiari"
-            "\n\n⚠️ <i>Questo bot è accessibile dai soli studenti, "
+            "\n📃 <b>Continuando con il login si dichiara di aver letto "
+            "ed accettato l'Informativa per il Trattamento dei Dati Personali</b> "
+            "accessibile a <a href=\"https://marcoaceti.it/classevivabot/informativa_privacy.html\">"
+            "questo indirizzo</a>. Se non sei è d'accordo con l'Informativa per il Trattamento dei Dati Personali "
+            "sopra citata, <b>non utilizzare il bot</b> o "
+            "<a href=\"https://github.com/MarcoBuster/ClasseVivaBot#installation\">installalo</a> sulla tua macchina."
+            "\n\nInserisci l'username o la mail di ClasseViva / Spaggiari"
+            "\n⚠️ <i>Questo bot è accessibile dai soli studenti, "
             "i dati di login di un docente potrebbero non funzionare</i>"
         )
         message.chat.send(text, syntax="HTML", preview=False)
