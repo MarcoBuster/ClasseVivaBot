@@ -44,7 +44,7 @@ def process(query, data, message):
     day = utils.from_iso_format(data)
     result = session.lessons(day=day)
 
-    if not result['lessons']:
+    if not result.get('lessons', False):
         text = (
             "📆 <b>Registro di classe del giorno {day}</b>"
             "\n<i>Nessuna lezione da mostrare.</i>"
