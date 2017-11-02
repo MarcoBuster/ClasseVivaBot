@@ -1,4 +1,6 @@
+requests
 classeviva
 botogram
 redis
 python-dateutil
+psycopg2
