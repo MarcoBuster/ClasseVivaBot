@@ -65,3 +65,6 @@ def process(query, data, message):
             "\nSe vuoi a continuare ad usare il <b>bot</b>, manda il comando /start ed <b>riesegui il login</b>."
         )
         message.edit(text, syntax="HTML", preview=False)
+
+    elif data == 'connect':
+        query.notify("💪 In arrivo prestissimo!", alert=True)

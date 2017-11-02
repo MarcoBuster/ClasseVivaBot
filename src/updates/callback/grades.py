@@ -32,7 +32,8 @@ utils = Utils()
 def process(query, data, message):
     u = User(query.sender)
     if not u.logged_in:
-        return  # TODO: Error! You must logged in to use this bot
+        query.notify('❌ Devi aver fatto il login per usare questa funzione!', alert=True)
+        return
 
     session = u.login()
 
