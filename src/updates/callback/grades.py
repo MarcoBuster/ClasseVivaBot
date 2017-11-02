@@ -69,6 +69,8 @@ def process(query, data, message):
         )
         keyboard = botogram.Buttons()
         index = 0
+        global_summation = 0
+        global_count = 0
         for subject in subjects:
             summation = 0
             count = 0
@@ -87,6 +89,8 @@ def process(query, data, message):
 
             if count != 0:
                 average = summation / count
+                global_summation += average
+                global_count += 1
 
                 if average >= 8:
                     outcome = 'largamente positivo'
@@ -122,6 +126,13 @@ def process(query, data, message):
                                      "grades", format(subjects[subject][0]['subjectId']))
             index += 1
 
+        if global_count != 0:
+            global_average = global_summation / global_count
+        else:
+            global_average = 'non disponibile'
+
+        text += "\n\n⭐️ <b>Media totale</b>: {global_average}".format(
+            global_average=round(global_average, 3) if type(global_average) in [int, float] else global_average)
         keyboard[index + 1].callback("🔙 Torna indietro", "home")
         message.edit(text, syntax="HTML", preview=False, attach=keyboard)
 
