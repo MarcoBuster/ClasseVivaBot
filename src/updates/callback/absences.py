@@ -56,6 +56,7 @@ def process(query, message):
     )
     absences = ""
     delays = ""
+    soft_delays = ""
     anticipated_relases = ""
     not_justified = 0
     for event in result['events']:
@@ -91,6 +92,20 @@ def process(query, message):
                 )
             )
 
+        elif event['evtCode'] == 'ABR1':
+            if not soft_delays:
+                soft_delays = "\n➖➖ <b>Ritardi brevi</b>"
+
+            soft_delays += (
+                "\n• <b>{date}</b> {reason}{e}"
+                .format(
+                    e=" ⚠️ da giustificare!" if not event['isJustified'] else "",
+                    date=utils.format_date(utils.from_iso_format(event['evtDate'])),
+                    reason="<i>{reason}</i>".format(reason=event['justifReasonDesc']).lower()
+                    if event['isJustified'] else "",
+                )
+            )
+
         elif event['evtCode'] == 'ABU0':
             if not anticipated_relases:
                 anticipated_relases = "\n➖➖ <b>Uscite anticipate</b>"
@@ -108,7 +123,7 @@ def process(query, message):
 
     text += (
         ("\n<b>‼️ {not_justified} da giustificare</b>".format(not_justified=not_justified)
-            if not_justified != 0 else "") + absences + delays + anticipated_relases
+            if not_justified != 0 else "") + absences + soft_delays + delays + anticipated_relases
     )
     keyboard = botogram.Buttons()
     keyboard[0].callback("🔙 Torna indietro", "home")
