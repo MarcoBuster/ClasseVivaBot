@@ -89,8 +89,8 @@ def absences(query, message):
 
 
 @bot.callback("notes")
-def notes(query):
-    query.notify("💪 In arrivo prestissimo!", alert=True)
+def notes(query, message):
+    callback.notes.process(query, message)
 
 
 @bot.callback("null")
